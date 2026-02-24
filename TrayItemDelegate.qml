@@ -1,64 +1,45 @@
 import Quickshell
 import Quickshell.Services.SystemTray
+import Quickshell.Wayland
 import QtQuick
 
-// ── TrayItemDelegate ──────────────────────────────────────────
-// Single tray icon with left/right click and tooltip
 Item {
   id: root
-  width:  20
+  width: 20
   height: 20
 
   required property SystemTrayItem item
   signal closePopup()
 
-  // Tooltip
-  property string tooltipText: root.item?.tooltip?.title || root.item?.title || ""
-
+  QsMenuAnchor {
+    id: menuAnchor
+    anchor.item: root
+    anchor.edges: Edges.Bottom
+    anchor.gravity: Edges.Bottom
+    menu: root.item.menu
+  }
 
   Image {
-    anchors.fill: parent
-    source:       root.item?.icon ?? ""
-    smooth:       true
-    mipmap:       true
+    anchors.centerIn: parent
+    width: 16; height: 16
+    source: root.item.icon
+    sourceSize.width: 16
+    sourceSize.height: 16
+    fillMode: Image.PreserveAspectFit
   }
-
-  // Hover tooltip
-  Rectangle {
-    id: tooltip
-    visible:      hov.hovered && root.tooltipText !== ""
-    anchors.bottom: parent.top
-    anchors.horizontalCenter: parent.horizontalCenter
-    anchors.bottomMargin: 4
-    color:        Theme.fg
-    radius:       4
-    width:        tooltipLabel.implicitWidth + 10
-    height:       tooltipLabel.implicitHeight + 6
-
-    Text {
-      id: tooltipLabel
-      anchors.centerIn: parent
-      text:       root.tooltipText
-      color:      "white"
-      font.family:    Theme.font
-      font.pixelSize: 10
-    }
-  }
-
-  HoverHandler { id: hov }
 
   MouseArea {
     anchors.fill: parent
     acceptedButtons: Qt.LeftButton | Qt.RightButton
-    onClicked: (mouse) => {
-      if (mouse.button === Qt.LeftButton) {
-        root.item.activate()
-      } else {
-        root.item.secondaryActivate()
-      }
-      root.closePopup()
-    }
     cursorShape: Qt.PointingHandCursor
+
+    onClicked: (mouse) => {
+      if (mouse.button === Qt.RightButton) {
+        menuAnchor.open()
+      } else {
+        root.item.activate()
+        root.closePopup()
+      }
+    }
   }
 }
-

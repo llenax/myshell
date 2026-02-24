@@ -133,7 +133,7 @@ Item {
       NumberAnimation {
         target: popupRect
         property: "height"
-        to: 300
+        to: 302
         duration: 220
         easing.type: Easing.OutCubic
       }
@@ -168,6 +168,7 @@ Item {
     Rectangle {
       id: popupRect
       anchors.top: parent.top
+      anchors.topMargin: 2
       anchors.left: parent.left
       anchors.right: parent.right
       color: Theme.bg
@@ -176,6 +177,12 @@ Item {
       border.width: 0
 
       layer.enabled: true
+
+      Rectangle {
+        width: parent.width
+        height: 2
+        color: Theme.purple
+      }
 
       Item {
         anchors.fill: parent

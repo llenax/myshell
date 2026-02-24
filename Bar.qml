@@ -84,7 +84,9 @@ PanelWindow {
           id: trayRow
           anchors.centerIn: parent
           spacing: 10
-          TrayModule {}
+          TrayModule {
+            Component.onCompleted: barItem = trayPill
+          }
           VolumeModule {
             Component.onCompleted: barItem = trayPill
           }
