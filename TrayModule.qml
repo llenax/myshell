@@ -50,6 +50,7 @@ Item {
     HyprlandFocusGrab {
       id: focusGrab
       windows: [popup]
+      active: popup.visible
       onCleared: {
         if (popup.visible && !closeAnim.running) closeAnim.restart()
       }
@@ -121,7 +122,9 @@ Item {
           delegate: TrayItemDelegate {
             required property SystemTrayItem modelData
             item: modelData
-            onClosePopup: popup.visible = false
+            onMenuOpened: focusGrab.active = false
+            onMenuClosed: focusGrab.active = true
+            onClosePopup: closeAnim.restart()
           }
         }
       }

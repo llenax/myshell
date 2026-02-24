@@ -10,6 +10,8 @@ Item {
 
   required property SystemTrayItem item
   signal closePopup()
+  signal menuOpened()
+  signal menuClosed()
 
   QsMenuAnchor {
     id: menuAnchor
@@ -17,6 +19,8 @@ Item {
     anchor.edges: Edges.Bottom
     anchor.gravity: Edges.Bottom
     menu: root.item.menu
+    onOpened: root.menuOpened()
+    onClosed: root.menuClosed()
   }
 
   Image {
