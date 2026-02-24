@@ -64,6 +64,7 @@ PanelWindow {
       ClockModule {
         id: clockModule
         anchors.centerIn: parent
+        Component.onCompleted: barItem = centerPill
       }
     }
 
