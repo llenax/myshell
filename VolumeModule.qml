@@ -53,19 +53,30 @@ Item {
     running: true
     stdout: StdioCollector {
       onStreamFinished: {
+
+        const binaryIconMap = {
+          "helium":  "helium-browser",
+        }
+
         const text = this.text
         const blocks = text.split("Sink Input #")
         .slice(1)
         .map(block => {
           const nameMatch  = block.match(/application\.name = "([^"]+)"/)
           const iconMatch  = block.match(/application\.icon-name = "([^"]+)"/)
+          const binaryMatch = block.match(/application\.process\.binary = "([^"]+)"/)
           const volMatch   = block.match(/Volume:.*?(\d+)%/)
           const muteMatch  = block.match(/Mute: (yes|no)/)
           const idMatch    = block.match(/^(\d+)/)
+
+          const binary = binaryMatch ? binaryMatch[1].toLowerCase() : null
+
           return {
             id:    idMatch   ? idMatch[1]            : null,
             name:  nameMatch ? nameMatch[1]          : "Unknown",
-            icon:  iconMatch ? iconMatch[1]          : "audio-x-generic",
+            icon: iconMatch ? iconMatch[1]
+            : binary && binaryIconMap[binary] ? binaryIconMap[binary]
+            : binary ?? "audio-x-generic",
             vol:   volMatch  ? parseInt(volMatch[1]) : 100,
             muted: muteMatch ? muteMatch[1] === "yes": false,
           }
@@ -364,6 +375,7 @@ Item {
                 property int localVol: modelData.vol
 
                 onModelDataChanged: {
+                  console.log(modelData.icon)
                   if (!root.anySliderDragging) localVol = modelData.vol
                 }
 
@@ -380,14 +392,22 @@ Item {
                 RowLayout {
                   Layout.fillWidth: true
 
-                  Image {
-                    id: img
-                    width: 14; height: 14
-                    source: Quickshell.iconPath(modelData.icon, "audio-x-generic")
-                    fillMode: Image.PreserveAspectFit
-                    sourceSize.width: 14
-                    sourceSize.height: 14
-                    visible: status === Image.Ready
+                  Item {
+                    width: 14
+                    height: 14
+                    clip: true
+
+                    Image {
+                      id: img
+                      width: 14; height: 14
+                      anchors.centerIn: parent
+                      source: Quickshell.iconPath(modelData.icon, "audio-x-generic")
+                      fillMode: Image.PreserveAspectFit
+                      sourceSize.width: 14
+                      sourceSize.height: 14
+                      smooth: true
+                      visible: status === Image.Ready
+                    }
                   }
 
                   Text {

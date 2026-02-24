@@ -47,10 +47,10 @@ QtObject {
     if (iconExists(lower)) { console.log("exists lower", lower); return lower }
 
     const heuristic = DesktopEntries.heuristicLookup(str)
-    console.log("heuristic", str, heuristic?.icon)
+    // console.log("heuristic", str, heuristic?.icon)
     if (heuristic) return heuristic.icon
 
-    console.log("gave up on", str)
+    // console.log("gave up on", str)
     return "application-x-executable"
   }
 }
