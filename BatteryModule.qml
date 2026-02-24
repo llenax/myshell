@@ -220,7 +220,15 @@ Item {
             }
             font.family:    "Hack Nerd Font"
             font.pixelSize: 28
-            color: root.critical ? Theme.red : root.charging ? Theme.green : Theme.yellowD
+            color: {
+              if (root.critical) {
+                return Theme.red
+              }
+              if (root.charging || root.batPercent > 50) {
+                return Theme.green
+              }
+              return Theme.yellowD
+            }
           }
 
           ColumnLayout {
