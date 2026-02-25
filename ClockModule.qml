@@ -213,7 +213,7 @@ Item {
   Text {
     id: timeText
     anchors.centerIn: parent
-    text: Qt.formatDateTime(clock.date, "hh:mm  ddd dd MMM")
+    text: Qt.formatDateTime(clock.date, "hh:mm AP")
     color: Theme.green
     font.family:    Theme.font
     font.pixelSize: Theme.fontSize
