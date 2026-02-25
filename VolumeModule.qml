@@ -375,7 +375,6 @@ Item {
                 property int localVol: modelData.vol
 
                 onModelDataChanged: {
-                  console.log(modelData.icon)
                   if (!root.anySliderDragging) localVol = modelData.vol
                 }
 

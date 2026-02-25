@@ -36,21 +36,18 @@ QtObject {
     if (!str || str.length === 0) return "application-x-executable"
 
     const entry = DesktopEntries.byId(str)
-    // console.log("byId", str, entry?.icon)
     if (entry) return entry.icon
 
     if (substitutions[str]) return substitutions[str]
 
-    if (iconExists(str)) { console.log("exists as-is", str); return str }
+    if (iconExists(str)) { return str }
 
     const lower = str.toLowerCase()
-    if (iconExists(lower)) { console.log("exists lower", lower); return lower }
+    if (iconExists(lower)) { return lower }
 
     const heuristic = DesktopEntries.heuristicLookup(str)
-    // console.log("heuristic", str, heuristic?.icon)
     if (heuristic) return heuristic.icon
 
-    // console.log("gave up on", str)
     return "application-x-executable"
   }
 }

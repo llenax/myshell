@@ -20,8 +20,6 @@ Item {
   readonly property var overflowItems: allItems.slice(pinnedCount)
   readonly property bool hasOverflow: overflowItems.length > 0
 
-  onAllItemsChanged: console.log("tray items:", allItems.length, allItems.map(i => i.id))
-
   // ── Overflow popup ────────────────────────────────────────
   PopupWindow {
     id: popup
