@@ -72,7 +72,6 @@ PanelWindow {
       id: rightPill
       anchors.right: parent.right
       anchors.rightMargin: Theme.barMarginH
-      anchors.verticalCenter: parent.verticalCenter
       spacing: 4
 
       Rectangle {
