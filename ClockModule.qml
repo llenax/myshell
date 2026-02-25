@@ -124,7 +124,7 @@ Item {
             text: Qt.formatDate(popup.displayDate, "MMMM yyyy")
             font.family:    Theme.font
             font.pixelSize: 13
-            font.weight:    Font.SemiBold
+            font.weight:    Font.DemiBold
             color: Theme.fg
           }
 
@@ -198,7 +198,7 @@ Item {
                 text: index + 1
                 font.family:    Theme.font
                 font.pixelSize: 11
-                font.weight:    isToday ? 600 : 400
+                font.weight:    isToday ? Font.DemiBold : Font.Normal
                 color: isToday ? "white" : Theme.fg
               }
             }
@@ -217,7 +217,7 @@ Item {
     color: Theme.green
     font.family:    Theme.font
     font.pixelSize: Theme.fontSize
-    font.weight:    Font.SemiBold
+    font.weight:    Font.DemiBold
     font.letterSpacing: 0.5
   }
 

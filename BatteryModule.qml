@@ -237,7 +237,7 @@ Item {
               text: root.batPercent + "%  ·  " + root.batStatus
               font.family:    Theme.font
               font.pixelSize: 13
-              font.weight:    Font.SemiBold
+              font.weight:    Font.DemiBold
               color: Theme.fg
             }
             Text {

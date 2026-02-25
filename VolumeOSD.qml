@@ -6,8 +6,8 @@ import QtQuick.Layouts
 PanelWindow {
   id: osd
   visible: false
-  width: 220
-  height: 56
+  implicitWidth: 220
+  implicitHeight: 56
   color: "transparent"
 
   anchors.bottom: true
