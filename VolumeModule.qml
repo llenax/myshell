@@ -13,6 +13,8 @@ Item {
   implicitWidth:  24
   implicitHeight: 24
 
+  signal openMixer()
+
   property Item barItem: null
 
   property int  vol:   0
@@ -50,7 +52,7 @@ Item {
   Process {
     id: getAppVolumes
     command: ["pactl", "list", "sink-inputs"]
-    running: true
+    running: false
     stdout: StdioCollector {
       onStreamFinished: {
 
@@ -94,7 +96,7 @@ Item {
     stdout: SplitParser {
       onRead: msg => {
         if (msg.includes("sink") && msg.includes("change")) {
-          getVolume.running = true  // re-fetch volume
+          refresh()
         }
       }
     }
@@ -250,6 +252,26 @@ Item {
             id: popupContent
             width: flick.width - 32
             spacing: 12
+
+            Rectangle {
+                Layout.fillWidth: true
+                height: 28; radius: 4
+                color: mixHover ? Theme.slateD : "transparent"
+                border.width: 1; border.color: Theme.slateD
+                property bool mixHover: false
+                Behavior on color { ColorAnimation { duration: 100 } }
+
+                RowLayout {
+                    anchors.centerIn: parent; spacing: 6
+                    Text { text: "󰕾"; font.family: "Hack Nerd Font"; font.pixelSize: 13; color: Theme.fgMuted }
+                    Text { text: "Open Mixer"; font.family: Theme.font; font.pixelSize: 12; color: Theme.fgMuted }
+                }
+                MouseArea {
+                    anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                    onEntered: parent.mixHover = true; onExited: parent.mixHover = false
+                    onClicked: { closeAnim.restart(); root.openMixer() }
+                }
+            }
 
             // ── Master volume ─────────────────────────────
             ColumnLayout {
@@ -415,7 +437,7 @@ Item {
                     text: "󰕾"
                     font.family: "Hack Nerd Font"
                     font.pixelSize: 11
-                  } 
+                  }
 
                   Text {
                     text: modelData.name
@@ -522,4 +544,3 @@ Item {
     }
   }
 }
-

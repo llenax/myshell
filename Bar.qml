@@ -87,8 +87,12 @@ PanelWindow {
           TrayModule {
             Component.onCompleted: barItem = trayPill
           }
+          Mixer {
+            id: mixer
+          }
           VolumeModule {
-            Component.onCompleted: barItem = trayPill
+              Component.onCompleted: barItem = trayPill
+              onOpenMixer: mixer.mixerVisible = true
           }
         }
       }
